@@ -1,0 +1,30 @@
+name: Build Wekan Debug Image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker Image
+        run: |
+          docker build -t wekan-debug .
+
+      - name: Save Docker Image to .tar.gz
+        run: |
+          docker save wekan-debug | gzip > wekan-debug.tar.gz
+
+      - name: Upload wekan-debug.tar.gz
+        uses: actions/upload-artifact@v3
+        with:
+          name: wekan-debug-image
+          path: wekan-debug.tar.gz
+          retention-days: 7
+
