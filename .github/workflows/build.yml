@@ -22,7 +22,7 @@ jobs:
           docker save wekan-debug | gzip > wekan-debug.tar.gz
 
       - name: Upload wekan-debug.tar.gz
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: wekan-debug-image
           path: wekan-debug.tar.gz
